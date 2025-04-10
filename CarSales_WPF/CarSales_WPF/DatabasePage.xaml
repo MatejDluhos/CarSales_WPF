@@ -1,0 +1,105 @@
+﻿<Page x:Class="CarSales_WPF.DatabasePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:CarSales_WPF"
+      mc:Ignorable="d" Background="White"
+      d:DesignHeight="450" d:DesignWidth="600"
+      Title="DatabasePage">
+
+    <Page.Resources>
+        <local:CustomCurrencyConverter x:Key="CustomCurrencyConverter" />
+        <Style TargetType="DataGrid">
+            <Setter Property="HorizontalGridLinesBrush" Value="Black" />
+            <Setter Property="VerticalGridLinesBrush" Value="White" />
+            <Setter Property="BorderBrush" Value="Black" />
+            <Setter Property="FontFamily" Value="Segoe UI" />
+            <Setter Property="FontSize" Value="14" />
+            <Setter Property="RowHeight" Value="40" />
+            <Setter Property="VerticalAlignment" Value="Bottom" />
+        </Style>
+    </Page.Resources>
+    
+    <Grid>
+        
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Back Button -->
+        <Button x:Name="BackButton"  Grid.Row="0"
+                Content="Zpět" Width="100" Height="30" 
+                Margin="10,10,10,0"
+                HorizontalAlignment="Right"
+                Background="LightGray" BorderBrush="Black"
+                Click="BackButton_Click"/>
+
+        <!-- Data Table -->
+        <DataGrid x:Name="DataGrid" Grid.Row="1"
+                  AutoGenerateColumns="False"
+                  VerticalGridLinesBrush="White"
+                  CanUserAddRows="False"
+                  CanUserDeleteRows="False"
+                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" 
+                  Margin="10,10,10,10" >
+
+            <DataGrid.Resources>
+                <Style TargetType="DataGridColumnHeader">
+                    <Setter Property="Background" Value="LightGray" />
+                    <Setter Property="Foreground" Value="Black" />
+                    <Setter Property="BorderThickness" Value="0,0,0,1" />
+                    <Setter Property="BorderBrush" Value="Black" />
+                </Style>
+                <Style TargetType="Border">
+                    <Setter Property="BorderBrush" Value="Black" />
+                    <Setter Property="BorderThickness" Value="1" />
+                </Style>
+                <Style TargetType="DataGridRow">
+                    <Setter Property="Background" Value="White" />
+                </Style>
+            </DataGrid.Resources>
+
+            <DataGrid.Columns>
+                <!-- Column 1 -->
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.Header>
+                        <StackPanel Margin="5,0">
+                            <TextBlock Text="Název modelu"/>
+                            <TextBlock Text="Cena bez DPH"/>
+                        </StackPanel>
+                    </DataGridTemplateColumn.Header>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="5,0">
+                                <TextBlock Text="{Binding ModelName}" />
+                                <TextBlock Text="{Binding WeekendTotalWithoutDPH,
+                                    Converter={StaticResource CustomCurrencyConverter}}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+
+                <!-- Column 2 -->
+                <DataGridTemplateColumn>
+                    <DataGridTemplateColumn.Header>
+                        <StackPanel Margin="15,0" >
+                            <TextBlock />
+                            <TextBlock Text="Cena s DPH" />
+                        </StackPanel>
+                    </DataGridTemplateColumn.Header>
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Margin="15,0">
+                                <TextBlock />
+                                <TextBlock Text="{Binding WeekendTotalWithDPH,
+                                    Converter={StaticResource CustomCurrencyConverter}}"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>
